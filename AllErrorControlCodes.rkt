@@ -771,10 +771,8 @@
          [per (all-combinations pr-r n)]
          [ele (map (lambda(x) (reverse (sort-by-degree x))) per)]
          [z-pos (map (lambda(y) (map (lambda(x) (get-all-matching-pos 0 x)) y)) ele)]
-         ;
-         [z-pos-c (map (lambda(x) (sort (remove-duplicates (flatten x)) <)) z-pos)]
-         ;
-         [z-pos-g (map (lambda(x y) (flatten (cons x y))) z-pos)]
+         ;         [z-pos-c (map (lambda(x) (sort (remove-duplicates (flatten x)) <)) z-pos)]
+         ;         [z-pos-g (map (lambda(x y) (flatten (cons x y))) z-pos)]
          [prd (map (lambda(x) (bitwise-AND-binary-polys x)) per)]
          [z-pos-nd (map (lambda(x) (remove-common-from-lists x)) z-pos)]
          [z-pos-ndg (map (lambda(x) (map (lambda(y) (group-list y (/ (length y)
@@ -842,15 +840,11 @@
                   [gm-non1 (reverse (cdr (reverse gm)))]
                   [gm-sec-r (sort-by-weight (remove* pr-r gm-non1))]
                   [res-sec-r (reverse (cdr (reverse res)))];
-                  [res1 (map (lambda(x y) (mcons x y)) gm-non1
-                             ;
-                             (append* (car res) (cdr res)))]
-                  ;
-                  [res2 (append (list (build-list (width pr-r) (lambda(x) (list x))))
-                                ;
-                                (map (lambda(x) (mcdr x))
-                                     ;
-                                     (sort res1 (lambda(x y) (> (degree (mcar x)) (degree (mcar y)))))))]
+                  ;[res1 (map (lambda(x y) (mcons x y)) gm-non1
+                  ;                             (append* (car res) (cdr res)))]
+                  ;                  [res2 (append (list (build-list (width pr-r) (lambda(x) (list x))))
+                  ;                                (map (lambda(x) (mcdr x))
+                  ;                                     (sort res1 (lambda(x y) (> (degree (mcar x)) (degree (mcar y)))))))]
                   [res3 (map (lambda(x y)
                                (let* ([chk-p (flatten (check-add-parities-by-weight x y))]
                                       [chk-g (group-list chk-p (/ (length chk-p) (length y)))])
@@ -868,50 +862,31 @@
                   [res9 (map (lambda(x) (mcdr x)) res8)]
                   )
         (begin
-          ;
-          (display (list
-                    ;
-                    res
-                    ;;
-                    res
-                    ;;
-                    res7
-                    ;;
-                    res8
-                    ;;
-                    res9
-                    ;
-                    res-pbc-l
-                    ;
-                    ))
+          ;          (display (list
+                    ;                    res
+                    ;;                    res
+                    ;;                    res7
+                    ;;                    res8
+                    ;;                    res9
+                    ;                    res-pbc-l
+                    ;                    ))
           (values
-           ;
-           res
-           ;
-           res-sec-r
-           ;
-           res1
-           ;
-           res2
-           ;
-           gm-non1
-           ;
-           res3
+           ;           res
+           ;           res-sec-r
+           ;           res1
+           ;           res2
+           ;           gm-non1
+           ;           res3
            res5-1
-           ;
-           res5
-           ;
-           res6
-           ;
-           res7
-           ;
-           res8
-           ;
-           res9
-           ;
-           res-pbc-l
-           )
-          )))))(define (is-permutation? lst1 lst2)
+           ;           res5
+           ;           res6
+           ;           res7
+           ;           res8
+           ;           res9
+           ;           res-pbc-l
+           ))))))
+
+(define (is-permutation? lst1 lst2)
                  (equal? (sort lst1 <) (sort lst2 <)))
 (define (remove-head-permutations lst1 lsts)
   (filter (lambda(x) (not (is-permutation? (car lst1) (car x)))) lsts))
@@ -4529,17 +4504,17 @@
               ;(equal? (remove-leading-RS-zeros z-p) (remove-leading-RS-zeros z))
               (null? (remove-leading-RS-zeros z)) (null? (remove-leading-RS-zeros si1)))
           ;          (let* ([lq (car (divide-RS-polys p1 x g num-r))] ;(map (lambda(x) )
-                 ;                 [lq-rss (RS-poly-syndromes lq g (sub1 (expt 2 (degree g))))]
-                 ;                 [lq-inv-e-p (map (lambda(x) (add1 x)) (get-all-matching-pos (zeros (degree g)) lq-rss))]
-                 ;                 [lq-e-p (map (lambda(x) (divide-GF2-pows 0 x g)) lq-inv-e-p)]) (list (list lq y lq-rss lq-inv-e-p lq-e-p))
-            (list si2 (RS-error-locs si2 g num-r) ;(add-RS-polys si2 (mult-RS-polys si1 (car (divide-RS-polys z-p z g num-r)) g num-r) g)
-    q z z-p si1 q-acc (divide-RS-polys (mult-RS-polys si2 z-1 g num-r)
-                                       (cons 0 (RS-zeros (- num-r 2))) g num-r)
-    (divide-RS-polys (mult-RS-polys si2 z-1 g num-r) z-2 g num-r))
-  (let* ([d-r (divide-RS-polys z-p z g num-r)]
-         [qi (add-RS-polys si2 (mult-RS-polys si1 (car d-r) g num-r) g)])
-    ;)
-    (rec z (last d-r) (car d-r) qi si1 (cons (list z (last d-r) (car d-r) qi si1) q-acc)))))))
+          ;                 [lq-rss (RS-poly-syndromes lq g (sub1 (expt 2 (degree g))))]
+          ;                 [lq-inv-e-p (map (lambda(x) (add1 x)) (get-all-matching-pos (zeros (degree g)) lq-rss))]
+          ;                 [lq-e-p (map (lambda(x) (divide-GF2-pows 0 x g)) lq-inv-e-p)]) (list (list lq y lq-rss lq-inv-e-p lq-e-p))
+          (list si2 (RS-error-locs si2 g num-r) ;(add-RS-polys si2 (mult-RS-polys si1 (car (divide-RS-polys z-p z g num-r)) g num-r) g)
+                q z z-p si1 q-acc (divide-RS-polys (mult-RS-polys si2 z-1 g num-r)
+                                                   (cons 0 (RS-zeros (- num-r 2))) g num-r)
+                (divide-RS-polys (mult-RS-polys si2 z-1 g num-r) z-2 g num-r))
+          (let* ([d-r (divide-RS-polys z-p z g num-r)]
+                 [qi (add-RS-polys si2 (mult-RS-polys si1 (car d-r) g num-r) g)])
+            ;)
+            (rec z (last d-r) (car d-r) qi si1 (cons (list z (last d-r) (car d-r) qi si1) q-acc)))))))
 ;(define-values (bp1 bp2 bp3) (values (random-binary-poly 10000) (random-binary-poly 10000)
 ;(random-binary-poly 4000)))
 ;
@@ -4616,15 +4591,15 @@
 ;
 ;(define-values (pi4-1 pi4-2 pi5-1 pi5-2) (values
 ;(time (mult-RS_63_57-poly
-       ;       (mult-RS-polys (mult-RS-polys pi2 pi1 gp num-r) RS-p gp num-r)
-       ;       RS-p))
+;       (mult-RS-polys (mult-RS-polys pi2 pi1 gp num-r) RS-p gp num-r)
+;       RS-p))
 ;(time (mult-RS_63_57-poly
-       ;       (mult-RS-polys (mult-RS-polys pi1 pi2 gp num-r) RS-p gp num-r)
-       ;       RS-p))
+;       (mult-RS-polys (mult-RS-polys pi1 pi2 gp num-r) RS-p gp num-r)
+;       RS-p))
 ;(time (mult-RS_63_57-poly (mult-RS_63_57-poly
-                           ;                           (mult-RS_63_57-poly pi2 pi1) RS-p) RS-p))
+;                           (mult-RS_63_57-poly pi2 pi1) RS-p) RS-p))
 ;(time (mult-RS_63_57-poly (mult-RS_63_57-poly
-                           ;                           (mult-RS_63_57-poly pi1 pi2) RS-p) RS-p))))
+;                           (mult-RS_63_57-poly pi1 pi2) RS-p) RS-p))))
 ;
 ;(equal? pi4-1 p3-1)
 ;(equal? pi4-2 p3-2)
@@ -4649,11 +4624,11 @@
 ;
 ;(values (map (lambda(x) (RS-poly-syndromes (shuffle x) g num-r))
 ;(list (mult-RS-polys (reverse p1) p2 g num-r)
-      ;      (mult-RS_63_57-poly (reverse p1) p2) (mult-RS-polys2 (reverse p1) p2 g num-r))))
+;      (mult-RS_63_57-poly (reverse p1) p2) (mult-RS-polys2 (reverse p1) p2 g num-r))))
 ;
 ;(values (map (lambda(x) (RS-poly-syndromes (shuffle x) g num-r))
 ;(list (mult-RS-polys (reverse p2) p1 g num-r)
-      ;      (mult-RS_63_57-poly (reverse p2) p1) (mult-RS-polys2 (reverse p2) p1 g num-r))))
+;      (mult-RS_63_57-poly (reverse p2) p1) (mult-RS-polys2 (reverse p2) p1 g num-r))))
 ;
 ;(values (map (lambda(x) (RS-poly-syndromes (reverse x) g num-r))
 ;(list (mult-RS-polys p1 p2 g num-r) (mult-RS_63_57-poly p1 p2) (mult-RS-polys2 p1 p2 g num-r))))
@@ -4775,6 +4750,4 @@
 (define cs3 (regroup-list cs1 (length gm2)))
 (define cs4 (regroup-list (transpose cs2) (length gm1)))
 (define cs5 (encode-linear-code-l cs3 gm2))
-
-
 (define cs6 (encode-linear-code-l cs4 gm1))
